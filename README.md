@@ -1,6 +1,6 @@
-﻿#License plate recognition Aplication
-- This is a project practice license plate recognition of car in Viet Nam.
-- This project using lib opencv java to process image.
+﻿#License plate recognition Application
+- This project will practice about license plate recognition of car in Viet Nam.
+- This project using library opencv java to process image.
 
 - I will direct you install OpenCV Java in OS Linux and Window.
 	+ You access website below to download OpenCV appropriate with OS your PC.
