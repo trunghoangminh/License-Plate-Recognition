@@ -1,24 +1,20 @@
-package org.it.tdt.edu.vn.guicomponent;
+package org.it.tdt.edu.vn.processfile;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-
-import org.it.tdt.edu.vn.processfile.LiscencePlateBufferedImage;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
+/**
+ * 
+ * @author hmtrung This class use to parse convert Mat to BufferedImage and
+ *         reverse.
+ *
+ */
 public class ParseData {
-	private String imgUrl;
 	private Mat matResult;
 	private int typeByte;
-
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
+	private BufferedImage originalImage;
 
 	public Mat getMatResult() {
 		return matResult;
@@ -35,14 +31,23 @@ public class ParseData {
 	public void setTypeByte(int typeByte) {
 		this.typeByte = typeByte;
 	}
+	
+
+	public BufferedImage getOriginalImage() {
+		return originalImage;
+	}
+
+	public void setOriginalImage(BufferedImage originalImage) {
+		this.originalImage = originalImage;
+	}
 
 	/**
 	 * 
 	 * @param imgUrl
 	 *            This is constructor used to convert BufferedImage to Mat
 	 */
-	public ParseData(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public ParseData(BufferedImage originalImage) {
+		this.originalImage = originalImage;
 	}
 
 	/**
@@ -57,9 +62,6 @@ public class ParseData {
 	}
 
 	public Mat convertBufferedImageToMat() {
-		LiscencePlateBufferedImage image = new LiscencePlateBufferedImage(
-				imgUrl);
-		BufferedImage originalImage = image.getBufferedImageFromImageUrl();
 
 		byte[] originalData = ((DataBufferByte) originalImage.getRaster()
 				.getDataBuffer()).getData();

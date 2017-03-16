@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-import org.it.tdt.edu.vn.preprocessor.ImageProcessors;
+import org.it.tdt.edu.vn.preprocessor.GrayImage;
+import org.it.tdt.edu.vn.processfile.ParseData;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
@@ -19,14 +20,11 @@ public class ImageResult {
 	private Mat matResult;
 	private int typeByte;
 	private String windowName;
-	private String imgUrl;
 
-	public ImageResult(Mat matResult, int typeByte, String windowName,
-			String imgUrl) {
+	public ImageResult(Mat matResult, int typeByte, String windowName) {
 		this.matResult = matResult;
 		this.typeByte = typeByte;
 		this.windowName = windowName;
-		this.imgUrl = imgUrl;
 	}
 
 	public Mat getMatResult() {
@@ -53,14 +51,6 @@ public class ImageResult {
 		this.typeByte = typeByte;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-	
 	public void showResultImage() {
 
 		JFrame window = new JFrame(windowName);
@@ -76,11 +66,7 @@ public class ImageResult {
 
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		
-		ParseData parseData = new ParseData("/home/hmtrung/Pictures/biensoxe.jpg");
-		ImageProcessors imageProcessors = new ImageProcessors(parseData.convertBufferedImageToMat());
-		ImageResult imageResult = new ImageResult(imageProcessors.createBinaryImage(),
-				BufferedImage.TYPE_BYTE_GRAY, "Gray-Image", "");
+		ImageResult imageResult = new ImageResult(GrayImage.createThresholdImage(), BufferedImage.TYPE_BYTE_GRAY, "Threslhold");
 		imageResult.showResultImage();
 	}
 }
