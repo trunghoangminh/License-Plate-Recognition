@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import org.it.tdt.edu.vn.openandclose.OpenAndClose;
 import org.it.tdt.edu.vn.preprocessor.GrayImage;
 import org.it.tdt.edu.vn.processfile.ParseData;
 import org.opencv.core.Core;
@@ -66,7 +67,15 @@ public class ImageResult {
 
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		ImageResult imageResult = new ImageResult(GrayImage.createThresholdImage(), BufferedImage.TYPE_BYTE_GRAY, "Threslhold");
-		imageResult.showResultImage();
+		Mat mat = GrayImage.createThresholdImage();
+		OpenAndClose openAndClose = new OpenAndClose(mat);
+		openAndClose.openBeforeCloseAfter();
+		ImageResult imageResult1 = new ImageResult(mat,
+				BufferedImage.TYPE_BYTE_GRAY, "Threslhold");
+		ImageResult imageResult2 = new ImageResult(
+				openAndClose.getThresholdMat(), BufferedImage.TYPE_BYTE_GRAY,
+				"OpenAndClose");
+		imageResult1.showResultImage();
+		imageResult2.showResultImage();
 	}
 }
