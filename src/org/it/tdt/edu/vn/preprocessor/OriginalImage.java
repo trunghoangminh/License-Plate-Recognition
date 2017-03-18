@@ -12,7 +12,7 @@ import org.opencv.imgproc.Imgproc;
  * @author hmtrung This class use get mat original and create gray image.
  *
  */
-public class OgrinalImage {
+public class OriginalImage {
 
 	private static Mat getImage() {
 
@@ -21,6 +21,11 @@ public class OgrinalImage {
 		ParseData parseData = new ParseData(bufferedImage);
 		Mat matOriginal = parseData.convertBufferedImageToMat();
 		return matOriginal;
+	}
+
+	public static Mat getOriginalImage() {
+		Mat originalMat = getImage();
+		return originalMat;
 	}
 
 	/**

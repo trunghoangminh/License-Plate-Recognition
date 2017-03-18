@@ -4,8 +4,10 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import org.it.tdt.edu.vn.openandclose.Contour;
 import org.it.tdt.edu.vn.openandclose.OpenAndClose;
 import org.it.tdt.edu.vn.preprocessor.GrayImage;
+import org.it.tdt.edu.vn.preprocessor.OriginalImage;
 import org.it.tdt.edu.vn.processfile.ParseData;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -69,13 +71,43 @@ public class ImageResult {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		Mat mat = GrayImage.createThresholdImage();
 		OpenAndClose openAndClose = new OpenAndClose(mat);
-		openAndClose.openBeforeCloseAfter();
-		ImageResult imageResult1 = new ImageResult(mat,
-				BufferedImage.TYPE_BYTE_GRAY, "Threslhold");
-		ImageResult imageResult2 = new ImageResult(
+		openAndClose.closeBeforeOpeneAfter();
+
+		ImageResult originalResult = new ImageResult(
+				OriginalImage.getOriginalImage(), BufferedImage.TYPE_3BYTE_BGR,
+				"Original");
+		ImageResult grayResult = new ImageResult(
+				OriginalImage.createGrayImage(), BufferedImage.TYPE_BYTE_GRAY,
+				"Gray");
+		ImageResult thresholdResult = new ImageResult(
+				GrayImage.createThresholdImage(), BufferedImage.TYPE_BYTE_GRAY,
+				"Threshold");
+		
+		ImageResult openAndCloseResult = new ImageResult(
 				openAndClose.getThresholdMat(), BufferedImage.TYPE_BYTE_GRAY,
 				"OpenAndClose");
-		imageResult1.showResultImage();
-		imageResult2.showResultImage();
+		Contour contour = new Contour(mat);
+		Contour drawContour = new Contour(mat);
+		ImageResult contourResult = new ImageResult(
+				contour.createContour(), BufferedImage.TYPE_BYTE_GRAY,
+				"Contour");
+		ImageResult drawContourResult = new ImageResult(
+				drawContour.drawContour(), BufferedImage.TYPE_BYTE_GRAY,
+				"Draw Contour");
+		
+		
+		//contour.createContour();
+		 ImageResult imageResult1 = new ImageResult(
+		 contour.createContour(), BufferedImage.TYPE_BYTE_GRAY,
+		 "Threslhold");
+		 
+		 
+		 originalResult.showResultImage();
+		 grayResult.showResultImage();
+		 thresholdResult.showResultImage();
+		 openAndCloseResult.showResultImage();
+		 contourResult.showResultImage();
+		 drawContourResult.showResultImage();
+		 
 	}
 }

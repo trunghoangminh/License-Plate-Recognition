@@ -15,7 +15,7 @@ public class GrayImage {
 	 * @return destinationMat create threshold image.
 	 */
 	public static Mat createThresholdImage() {
-		Mat mat = OgrinalImage.createGrayImage();
+		Mat mat = OriginalImage.createGrayImage();
 		Mat destinationMat = new Mat(mat.cols(), mat.rows(), mat.type());
 		Imgproc.threshold(mat, destinationMat, 127, 255, Imgproc.THRESH_TOZERO);
 		byte[] dataDestination = new byte[destinationMat.rows()
@@ -46,7 +46,7 @@ public class GrayImage {
 	 */
 
 	public Mat createPyrDownmage() {
-		Mat mat = OgrinalImage.createGrayImage();
+		Mat mat = OriginalImage.createGrayImage();
 		Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
 		destinationMat = mat;
 		Imgproc.pyrDown(destinationMat, destinationMat, new Size(
