@@ -1,9 +1,7 @@
 package org.it.tdt.edu.vn.guicomponent;
 
 import java.awt.image.BufferedImage;
-
 import javax.swing.JFrame;
-
 import org.it.tdt.edu.vn.openandclose.Contour;
 import org.it.tdt.edu.vn.openandclose.OpenAndClose;
 import org.it.tdt.edu.vn.preprocessor.GrayImage;
@@ -88,25 +86,18 @@ public class ImageResult {
 				"OpenAndClose");
 		Contour contour = new Contour(mat);
 		Contour drawContour = new Contour(mat);
-		ImageResult contourResult = new ImageResult(
+		/*ImageResult contourResult = new ImageResult(
 				contour.createContour(), BufferedImage.TYPE_BYTE_GRAY,
-				"Contour");
+				"Contour");*/
 		ImageResult drawContourResult = new ImageResult(
 				drawContour.drawContour(), BufferedImage.TYPE_BYTE_GRAY,
 				"Draw Contour");
-		
-		
-		//contour.createContour();
-		 ImageResult imageResult1 = new ImageResult(
-		 contour.createContour(), BufferedImage.TYPE_BYTE_GRAY,
-		 "Threslhold");
-		 
 		 
 		 originalResult.showResultImage();
 		 grayResult.showResultImage();
 		 thresholdResult.showResultImage();
 		 openAndCloseResult.showResultImage();
-		 contourResult.showResultImage();
+		 //contourResult.showResultImage();
 		 drawContourResult.showResultImage();
 		 
 	}

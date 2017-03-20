@@ -30,7 +30,10 @@ public class OriginalImage {
 
 	/**
 	 * 
-	 * @return destinationMat create Mat image.
+	 * @return destinationMat
+	 *         <p>
+	 *         Create Mat image.
+	 *         </p>
 	 */
 	public static Mat createGrayImage() {
 		Mat originalMat = getImage();
