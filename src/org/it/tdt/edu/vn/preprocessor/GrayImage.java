@@ -14,30 +14,37 @@ public class GrayImage {
 	 * 
 	 * @return destinationMat create threshold image.
 	 */
-	public static Mat createThresholdImage() {
-		Mat mat = OriginalImage.createGrayImage();
-		Mat destinationMat = new Mat(mat.cols(), mat.rows(), mat.type());
-		Imgproc.threshold(mat, destinationMat, 127, 255, Imgproc.THRESH_TOZERO);
-		byte[] dataDestination = new byte[destinationMat.rows()
-				* destinationMat.cols() * (int) (destinationMat.elemSize())];
-		destinationMat.get(0, 0, dataDestination);
-		return destinationMat;
+	public static Mat createThresholdImage(Mat mat) {
+		if (mat != null) {
+			Mat destinationMat = new Mat(mat.cols(), mat.rows(), mat.type());
+			Imgproc.threshold(mat, destinationMat, 0, 10, Imgproc.THRESH_TOZERO);
+			byte[] dataDestination = new byte[destinationMat.rows()
+					* destinationMat.cols() * (int) (destinationMat.elemSize())];
+			destinationMat.get(0, 0, dataDestination);
+			return destinationMat;
+		}
+		System.err.println("Mat is empty");
+		return null;
 	}
 
 	/**
 	 * 
 	 * @return destinationMat create binary image.
 	 */
-	public static Mat createBinaryImage() {
-		Mat mat = createThresholdImage();
-		Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
-		destinationMat = mat;
-		Imgproc.adaptiveThreshold(mat, destinationMat, 255,
-				Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 40);
-		byte[] dataDestination = new byte[destinationMat.rows()
-				* destinationMat.cols() * (int) (destinationMat.elemSize())];
-		destinationMat.get(0, 0, dataDestination);
-		return destinationMat;
+	public static Mat createBinaryImage(Mat mat) {
+		if (mat != null) {
+			Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
+			destinationMat = mat;
+			Imgproc.adaptiveThreshold(mat, destinationMat, 255,
+					Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15,
+					40);
+			byte[] dataDestination = new byte[destinationMat.rows()
+					* destinationMat.cols() * (int) (destinationMat.elemSize())];
+			destinationMat.get(0, 0, dataDestination);
+			return destinationMat;
+		}
+
+		return null;
 	}
 
 	/**
@@ -45,15 +52,36 @@ public class GrayImage {
 	 * @return destinationMat create pyrDown image.
 	 */
 
-	public Mat createPyrDownmage() {
-		Mat mat = OriginalImage.createGrayImage();
-		Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
-		destinationMat = mat;
-		Imgproc.pyrDown(destinationMat, destinationMat, new Size(
-				mat.cols() / 2, mat.rows() / 2));
-		byte[] dataDestination = new byte[destinationMat.rows()
-				* destinationMat.cols() * (int) (destinationMat.elemSize())];
-		destinationMat.get(0, 0, dataDestination);
-		return destinationMat;
+	public Mat createPyrDownmage(Mat mat) {
+		if (mat != null) {
+
+			Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
+			destinationMat = mat;
+			Imgproc.pyrDown(destinationMat, destinationMat, new Size(
+					mat.cols() / 2, mat.rows() / 2));
+			byte[] dataDestination = new byte[destinationMat.rows()
+					* destinationMat.cols() * (int) (destinationMat.elemSize())];
+			destinationMat.get(0, 0, dataDestination);
+
+			return destinationMat;
+		}
+		System.err.println("Mat is empty");
+		return null;
+
+	}
+
+	public static Mat createGaussianBlur(Mat mat) {
+		if (mat != null) {
+			Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
+			destinationMat = mat;
+			Imgproc.GaussianBlur(mat, destinationMat, new org.opencv.core.Size(
+					5, 5), 5);
+			byte[] dataDestination = new byte[destinationMat.rows()
+					* destinationMat.cols() * (int) (destinationMat.elemSize())];
+			destinationMat.get(0, 0, dataDestination);
+			return destinationMat;
+		}
+		System.err.println("Mat is empty");
+		return null;
 	}
 }

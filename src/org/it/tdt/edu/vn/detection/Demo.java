@@ -24,7 +24,7 @@ public class Demo {
 
 		String b = "123123";
 		Demo demo = new Demo(b);
-		b ="tesst";
+		b = "tesst";
 		System.out.println(demo.getName());
 		System.out.println(b);
 

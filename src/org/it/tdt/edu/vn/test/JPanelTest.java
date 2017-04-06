@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 public class JPanelTest extends JPanel {
@@ -41,8 +41,8 @@ public class JPanelTest extends JPanel {
 	public static void main(String[] args) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		Mat source = Highgui.imread("/home/hmtrung/Pictures/hot_girl.jpg",
-				Highgui.CV_LOAD_IMAGE_COLOR);
+		Mat source = Imgcodecs.imread("/home/hmtrung/Pictures/hot_girl.jpg",
+				Imgcodecs.CV_LOAD_IMAGE_COLOR);
 
 		/*Mat destination1 = new Mat(source.rows() * 2, source.cols() * 2,
 				source.type());
@@ -60,7 +60,7 @@ public class JPanelTest extends JPanel {
 		destination = source;
 		Imgproc.pyrDown(source, destination,
 				new Size(source.cols() / 2, source.rows() / 2));
-		Highgui.imwrite("/home/hmtrung/Pictures/hot_girl_pyrDown.jpg",
+		Imgcodecs.imwrite("/home/hmtrung/Pictures/hot_girl_pyrDown.jpg",
 				destination);
 	}
 

@@ -7,5 +7,5 @@ package org.it.tdt.edu.vn.utils;
  */
 public class Utils {
 
-	public static final String PATH_IMAGE = "/home/hmtrung/Pictures/biensoxe.jpg";
+	public static final String PATH_IMAGE = "/home/hmtrung/Pictures/50Z2268.jpg";
 }

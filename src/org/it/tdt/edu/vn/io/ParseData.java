@@ -1,4 +1,4 @@
-package org.it.tdt.edu.vn.processfile;
+package org.it.tdt.edu.vn.io;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
@@ -7,8 +7,10 @@ import org.opencv.core.Mat;
 
 /**
  * 
- * @author hmtrung This class use to parse convert Mat to BufferedImage and
- *         reverse.
+ * @author hmtrung
+ *         <p>
+ *         This class use to parse convert Mat to BufferedImage and otherwise
+ *         <p>
  *
  */
 public class ParseData {
@@ -31,7 +33,6 @@ public class ParseData {
 	public void setTypeByte(int typeByte) {
 		this.typeByte = typeByte;
 	}
-	
 
 	public BufferedImage getOriginalImage() {
 		return originalImage;
@@ -44,7 +45,9 @@ public class ParseData {
 	/**
 	 * 
 	 * @param imgUrl
+	 *            <p>
 	 *            This is constructor used to convert BufferedImage to Mat
+	 *            <p>
 	 */
 	public ParseData(BufferedImage originalImage) {
 		this.originalImage = originalImage;
@@ -54,13 +57,20 @@ public class ParseData {
 	 * 
 	 * @param image
 	 * @param typeByte
+	 *            <p>
 	 *            This is constructor used to convert Mat to BufferedImage
+	 *            <p>
 	 */
 	public ParseData(Mat matResult, int typeByte) {
 		this.matResult = matResult;
 		this.typeByte = typeByte;
 	}
 
+	/**
+	 * 
+	 * @return oringinMat
+	 * <p> Return data Mat result<p>
+	 */
 	public Mat convertBufferedImageToMat() {
 
 		byte[] originalData = ((DataBufferByte) originalImage.getRaster()
@@ -71,6 +81,11 @@ public class ParseData {
 		return oringinMat;
 	}
 
+	/**
+	 * 
+	 * @return destinationImage
+	 * <p> Return data BufferedImage result<p>
+	 */
 	public BufferedImage convertMatToBufferedImage() {
 		byte[] dataDestination = new byte[matResult.rows() * matResult.cols()
 				* (int) (matResult.elemSize())];

@@ -1,14 +1,10 @@
-package org.it.tdt.edu.vn.openandclose;
+package org.it.tdt.edu.vn.detection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.it.tdt.edu.vn.detection.ContourResult;
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
@@ -54,10 +50,16 @@ public class Contour {
 		this.mat = mat;
 	}
 
+	public Contour(Mat mat, Mat matHierarchy, List<MatOfPoint> contourList ) {
+		this.matHierarchy = matHierarchy;
+		this.contours = contourList;
+		this.mat = mat;
+	}
+
 	public Contour createContour() {
 		Imgproc.findContours(mat, contours, matHierarchy, Imgproc.RETR_LIST,
 				Imgproc.CHAIN_APPROX_SIMPLE);
-		return this;
+		return new Contour(mat, matHierarchy, contours);
 	}
 
 	public Mat drawContour() {
@@ -66,5 +68,8 @@ public class Contour {
 				Imgproc.CHAIN_APPROX_SIMPLE);
 		Imgproc.drawContours(mat, contours, -1, new Scalar(255, 255, 0));
 		return mat;
+	}
+	public static void main(String[] args) {
+		
 	}
 }
