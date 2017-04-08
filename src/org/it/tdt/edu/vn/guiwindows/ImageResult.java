@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import org.it.tdt.edu.vn.detection.RectangleDetection;
 import org.it.tdt.edu.vn.io.OriginalImage;
 import org.it.tdt.edu.vn.io.ParseData;
 import org.it.tdt.edu.vn.preprocessor.GrayMat;
@@ -78,12 +79,21 @@ public class ImageResult {
 				originalImage.getImageFromResourcesDirectory());
 
 		Mat grayMat = originalMat.createGrayImage();
-		Mat mat = Morphology.erode(grayMat);
-		Mat threshold = GrayMat.createThresholdImage(mat);
-		Mat binaryMat = GrayMat.createBinaryImage(threshold);
+		Mat gauss = GrayMat.createGaussianBlur(grayMat);
 
-		ImageResult gray = new ImageResult(binaryMat, "Gray Image");
-		
+		Mat mor = Morphology.open(gauss, 1, 1);
+
+		Mat threshold1 = GrayMat.createThresholdImage(mor);
+		Mat threshold = GrayMat.createAdaptiveThresholdImage(threshold1);
+		Mat mor2 = Morphology.dilate(threshold, 3);
+		Mat binaryMat = GrayMat.createBinaryImage(mor2);
+
+		RectangleDetection rect = new RectangleDetection();
+		rect.setMat(binaryMat);
+		rect.executeRectangleDetection();
+
+		ImageResult gray = new ImageResult(mor2, "Gray Image");
+
 		gray.showResultImage();
 	}
 }

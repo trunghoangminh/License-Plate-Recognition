@@ -13,18 +13,16 @@ import org.opencv.imgproc.Imgproc;
  */
 public class Morphology {
 
-	public static Mat dilate(Mat mat) {
-		int dilationSize = 1;
+	public static Mat dilate(Mat mat, int dilationSize) { 
 		Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
 		Mat temp = Imgproc.getStructuringElement(Imgproc.MORPH_RECT,
-				new Size(2 * dilationSize + 1, 2 * dilationSize + 1));
+				new Size(2 * dilationSize , 2 * dilationSize ));
 		Imgproc.dilate(mat, destinationMat, temp);
 		return destinationMat;
 	}
 
-	public static Mat erode(Mat mat) {
+	public static Mat erode(Mat mat, int erosionSize) {
 		Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
-		int erosionSize = 3;
 		Mat temp = Imgproc.getStructuringElement(Imgproc.MORPH_RECT,
 				new Size(2 * erosionSize , 2 * erosionSize));
 		Imgproc.erode(mat, destinationMat, temp);
@@ -39,8 +37,8 @@ public class Morphology {
 	 *         erode before and dilate after
 	 *         <p>
 	 */
-	public static Mat open(Mat mat) {
-		return erode(dilate(mat));
+	public static Mat open(Mat mat,int dilationSize,int erosionSize) {
+		return erode(dilate(mat, erosionSize), erosionSize);
 	}
 
 	/**
@@ -51,7 +49,7 @@ public class Morphology {
 	 *         dilate before and erode after
 	 *         <p>
 	 */
-	public static Mat close(Mat mat) {
-		return dilate(erode(mat));
+	public static Mat close(Mat mat,int dilationSize,int erosionSize) {
+		return dilate(erode(mat,erosionSize),dilationSize);
 	}
 }

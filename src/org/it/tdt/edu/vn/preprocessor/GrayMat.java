@@ -23,7 +23,21 @@ public class GrayMat {
 	public static Mat createThresholdImage(Mat mat) {
 		if (mat != null) {
 			Mat destinationMat = new Mat(mat.cols(), mat.rows(), mat.type());
-			Imgproc.threshold(mat, destinationMat, 0, 10, Imgproc.THRESH_BINARY_INV);
+			Imgproc.threshold(mat, destinationMat, 0, 255, Imgproc.THRESH_OTSU);
+			byte[] dataDestination = new byte[destinationMat.rows()
+					* destinationMat.cols() * (int) (destinationMat.elemSize())];
+			destinationMat.get(0, 0, dataDestination);
+			return destinationMat;
+		}
+		System.err.println("Mat is empty");
+		return null;
+	}
+
+	public static Mat createAdaptiveThresholdImage(Mat mat) {
+		if (mat != null) {
+			Mat destinationMat = new Mat(mat.cols(), mat.rows(), mat.type());
+			Imgproc.adaptiveThreshold(mat, destinationMat, 255,
+					Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 5, 30);
 			byte[] dataDestination = new byte[destinationMat.rows()
 					* destinationMat.cols() * (int) (destinationMat.elemSize())];
 			destinationMat.get(0, 0, dataDestination);
@@ -46,8 +60,8 @@ public class GrayMat {
 			Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
 			destinationMat = mat;
 			Imgproc.adaptiveThreshold(mat, destinationMat, 255,
-					Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 15,
-					40);
+					Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV,
+					15, 40);
 			byte[] dataDestination = new byte[destinationMat.rows()
 					* destinationMat.cols() * (int) (destinationMat.elemSize())];
 			destinationMat.get(0, 0, dataDestination);
@@ -94,7 +108,7 @@ public class GrayMat {
 			Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
 			destinationMat = mat;
 			Imgproc.GaussianBlur(mat, destinationMat, new org.opencv.core.Size(
-					5, 5), 5);
+					1, 1), 1);
 			byte[] dataDestination = new byte[destinationMat.rows()
 					* destinationMat.cols() * (int) (destinationMat.elemSize())];
 			destinationMat.get(0, 0, dataDestination);

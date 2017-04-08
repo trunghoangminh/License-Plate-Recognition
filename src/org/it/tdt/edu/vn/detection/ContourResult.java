@@ -1,9 +1,12 @@
 package org.it.tdt.edu.vn.detection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 
 /**
  * 
@@ -11,32 +14,26 @@ import org.opencv.core.MatOfPoint;
  *
  */
 public class ContourResult {
-	private List<MatOfPoint> matResult;
-	private Mat matHierarchy;
+	private Contour contour;
 
-	public Mat getMatHierarchy() {
-		return matHierarchy;
+	public ContourResult(Contour contour) {
+		this.contour = contour;
+	}
+	
+	public Contour createContour() {
+		Mat mat = contour.getMat();
+		List<MatOfPoint> contours = contour.getContours();
+		Mat matHierarchy = contour.getMatHierarchy();
+		Imgproc.findContours(mat, contours, matHierarchy, Imgproc.RETR_LIST,
+				Imgproc.CHAIN_APPROX_SIMPLE);
+		return new Contour(mat, matHierarchy, contours);
 	}
 
-	public void setMatHierarchy(Mat matHierarchy) {
-		this.matHierarchy = matHierarchy;
+	public Mat drawContour() {
+		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+		Imgproc.findContours(contour.getMat(), contours, new Mat(), Imgproc.RETR_LIST,
+				Imgproc.CHAIN_APPROX_SIMPLE);
+		Imgproc.drawContours(contour.getMat(), contours, -1, new Scalar(255, 255, 0));
+		return contour.getMat();
 	}
-
-	public List<MatOfPoint> getMatResult() {
-		return matResult;
-	}
-
-	public void setMatResult(List<MatOfPoint> matResult) {
-		this.matResult = matResult;
-	}
-
-	public ContourResult(List<MatOfPoint> matResult, Mat matHierarchy) {
-		this.matResult = matResult;
-		this.matHierarchy = matHierarchy;
-	}
-
-	public ContourResult() {
-		super();
-	}
-
 }
