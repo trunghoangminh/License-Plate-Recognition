@@ -1,22 +1,25 @@
-package org.it.tdt.edu.vn.guicomponent;
+package org.it.tdt.edu.vn.guiwindows;
 
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-import org.it.tdt.edu.vn.detection.Contour;
-import org.it.tdt.edu.vn.detection.RectangleDetection;
+import org.it.tdt.edu.vn.io.OriginalImage;
 import org.it.tdt.edu.vn.io.ParseData;
-import org.it.tdt.edu.vn.preprocessor.GrayImage;
+import org.it.tdt.edu.vn.preprocessor.GrayMat;
 import org.it.tdt.edu.vn.preprocessor.Morphology;
-import org.it.tdt.edu.vn.preprocessor.OriginalImage;
+import org.it.tdt.edu.vn.preprocessor.OriginalMat;
+import org.it.tdt.edu.vn.utils.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
 /**
  * 
- * @author hmtrung This class use show result image after process like: gray,
- *         threshold, binary,...
+ * @author hmtrung
+ *         <p>
+ *         This class use show result image after process like: gray, threshold,
+ *         binary,...
+ *         <p>
  *
  */
 public class ImageResult {
@@ -25,9 +28,8 @@ public class ImageResult {
 	private int typeByte;
 	private String windowName;
 
-	public ImageResult(Mat matResult, int typeByte, String windowName) {
+	public ImageResult(Mat matResult, String windowName) {
 		this.matResult = matResult;
-		this.typeByte = typeByte;
 		this.windowName = windowName;
 	}
 
@@ -58,7 +60,7 @@ public class ImageResult {
 	public void showResultImage() {
 
 		JFrame window = new JFrame(windowName);
-		ParseData parseData = new ParseData(matResult, typeByte);
+		ParseData parseData = new ParseData(matResult);
 		BufferedImage destinationImage = parseData.convertMatToBufferedImage();
 		ImagePanel imagePanel = new ImagePanel(destinationImage);
 		window.setSize(destinationImage.getWidth(),
@@ -70,5 +72,18 @@ public class ImageResult {
 
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		OriginalImage originalImage = new OriginalImage(Utils.PATH_IMAGE);
+
+		OriginalMat originalMat = new OriginalMat(
+				originalImage.getImageFromResourcesDirectory());
+
+		Mat grayMat = originalMat.createGrayImage();
+		Mat mat = Morphology.erode(grayMat);
+		Mat threshold = GrayMat.createThresholdImage(mat);
+		Mat binaryMat = GrayMat.createBinaryImage(threshold);
+
+		ImageResult gray = new ImageResult(binaryMat, "Gray Image");
+		
+		gray.showResultImage();
 	}
 }

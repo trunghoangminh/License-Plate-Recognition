@@ -6,12 +6,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.it.tdt.edu.vn.utils.Utils;
-
 /**
  * 
- * @author hmtrung This class use to get image file from resources and have one
- *         method process to return BufferedImage
+ * @author hmtrung
+ *         <p>
+ *         This class use to get image file from resources and have one method
+ *         process to return BufferedImage
+ *         <p>
  */
 public class OriginalImage {
 
@@ -57,10 +58,5 @@ public class OriginalImage {
 		}
 		System.err.println("Image url is empty!");
 		return null;
-	}
-
-	public static void main(String[] args) {
-		OriginalImage image = new OriginalImage(Utils.PATH_IMAGE);
-		System.out.println(image.getImageFromResourcesDirectory());
 	}
 }

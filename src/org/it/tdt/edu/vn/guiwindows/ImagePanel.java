@@ -1,4 +1,4 @@
-package org.it.tdt.edu.vn.guicomponent;
+package org.it.tdt.edu.vn.guiwindows;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,10 @@ import javax.swing.JPanel;
 
 /**
  * 
- * @author TrungHoang This is class used to show image into panel.
+ * @author TrungHoang
+ *         <p>
+ *         This is class used to show image into panel.
+ *         <p>
  *
  */
 public class ImagePanel extends JPanel {

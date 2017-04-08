@@ -6,18 +6,24 @@ import org.opencv.imgproc.Imgproc;
 
 /**
  * 
- * @author hmtrung This class use to process mat image in gray image as:gray,
- *         binary, threshold.
+ * @author hmtrung
+ *         <p>
+ *         This class use to process mat image in gray image as:gray, binary,
+ *         threshold.
+ *         <p>
  */
-public class GrayImage {
+public class GrayMat {
 	/**
-	 * 
-	 * @return destinationMat create threshold image.
+	 * @param mat
+	 * @return destinationMat
+	 *         <p>
+	 *         create threshold image.
+	 *         <p>
 	 */
 	public static Mat createThresholdImage(Mat mat) {
 		if (mat != null) {
 			Mat destinationMat = new Mat(mat.cols(), mat.rows(), mat.type());
-			Imgproc.threshold(mat, destinationMat, 0, 10, Imgproc.THRESH_TOZERO);
+			Imgproc.threshold(mat, destinationMat, 0, 10, Imgproc.THRESH_BINARY_INV);
 			byte[] dataDestination = new byte[destinationMat.rows()
 					* destinationMat.cols() * (int) (destinationMat.elemSize())];
 			destinationMat.get(0, 0, dataDestination);
@@ -28,28 +34,34 @@ public class GrayImage {
 	}
 
 	/**
-	 * 
-	 * @return destinationMat create binary image.
+	 * @param mat
+	 * @return destinationMat
+	 *         <p>
+	 *         create binary image
+	 *         </p>
+	 *         .
 	 */
 	public static Mat createBinaryImage(Mat mat) {
 		if (mat != null) {
 			Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
 			destinationMat = mat;
 			Imgproc.adaptiveThreshold(mat, destinationMat, 255,
-					Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15,
+					Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY_INV, 15,
 					40);
 			byte[] dataDestination = new byte[destinationMat.rows()
 					* destinationMat.cols() * (int) (destinationMat.elemSize())];
 			destinationMat.get(0, 0, dataDestination);
 			return destinationMat;
 		}
-
+		System.err.println("Mat is empty");
 		return null;
 	}
 
 	/**
-	 * 
-	 * @return destinationMat create pyrDown image.
+	 * @param mat
+	 * @return destinationMat
+	 *         <p>
+	 *         create pyrDown image</b>.
 	 */
 
 	public Mat createPyrDownmage(Mat mat) {
@@ -70,6 +82,13 @@ public class GrayImage {
 
 	}
 
+	/**
+	 * 
+	 * @param mat
+	 * @return destinationMat
+	 *         <p>
+	 *         create GaussianBlur image</b>
+	 */
 	public static Mat createGaussianBlur(Mat mat) {
 		if (mat != null) {
 			Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());

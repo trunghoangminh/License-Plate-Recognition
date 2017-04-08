@@ -2,6 +2,7 @@ package org.it.tdt.edu.vn.io;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
@@ -15,7 +16,6 @@ import org.opencv.core.Mat;
  */
 public class ParseData {
 	private Mat matResult;
-	private int typeByte;
 	private BufferedImage originalImage;
 
 	public Mat getMatResult() {
@@ -24,14 +24,6 @@ public class ParseData {
 
 	public void setMatResult(Mat matResult) {
 		this.matResult = matResult;
-	}
-
-	public int getTypeByte() {
-		return typeByte;
-	}
-
-	public void setTypeByte(int typeByte) {
-		this.typeByte = typeByte;
 	}
 
 	public BufferedImage getOriginalImage() {
@@ -61,15 +53,16 @@ public class ParseData {
 	 *            This is constructor used to convert Mat to BufferedImage
 	 *            <p>
 	 */
-	public ParseData(Mat matResult, int typeByte) {
+	public ParseData(Mat matResult) {
 		this.matResult = matResult;
-		this.typeByte = typeByte;
 	}
 
 	/**
 	 * 
 	 * @return oringinMat
-	 * <p> Return data Mat result<p>
+	 *         <p>
+	 *         Return data Mat result
+	 *         <p>
 	 */
 	public Mat convertBufferedImageToMat() {
 
@@ -84,15 +77,17 @@ public class ParseData {
 	/**
 	 * 
 	 * @return destinationImage
-	 * <p> Return data BufferedImage result<p>
+	 *         <p>
+	 *         Return data BufferedImage result
+	 *         <p>
 	 */
 	public BufferedImage convertMatToBufferedImage() {
 		byte[] dataDestination = new byte[matResult.rows() * matResult.cols()
 				* (int) (matResult.elemSize())];
 		matResult.get(0, 0, dataDestination);
 		BufferedImage destinationImage = new BufferedImage(matResult.cols(),
-				matResult.rows(), typeByte);
-		destinationImage.getRaster().setDataElements(0, 0, matResult.cols(),
+				matResult.rows(), BufferedImage.TYPE_BYTE_GRAY);
+				destinationImage.getRaster().setDataElements(0, 0, matResult.cols(),
 				matResult.rows(), dataDestination);
 		return destinationImage;
 	}
