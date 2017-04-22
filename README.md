@@ -12,3 +12,5 @@
 	  - Set-up OpenCV in PC: http://docs.opencv.org/2.4/doc/tutorials/introduction/windows_install/windows_install.html
 	  - Set-up OpenCV in Eclipse: http://docs.opencv.org/2.4/doc/tutorials/introduction/java_eclipse/java_eclipse.html
 
+- Then change URL image in file Utils.java.
+- Run file Main to show result.

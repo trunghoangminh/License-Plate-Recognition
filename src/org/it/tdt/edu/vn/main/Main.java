@@ -1,4 +1,4 @@
-package org.it.tdt.edu.vn.guiwindows;
+package org.it.tdt.edu.vn.main;
 
 import org.it.tdt.edu.vn.process.LicensePlateDetection;
 import org.opencv.core.Core;

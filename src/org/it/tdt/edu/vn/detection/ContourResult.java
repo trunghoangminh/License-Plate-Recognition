@@ -31,7 +31,7 @@ public class ContourResult {
 
 	public Mat drawContour() {
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-		Imgproc.findContours(contour.getMat(), contours, new Mat(), Imgproc.RETR_TREE,
+		Imgproc.findContours(contour.getMat(), contours, new Mat(), Imgproc.RETR_LIST,
 				Imgproc.CHAIN_APPROX_SIMPLE);
 		Imgproc.drawContours(contour.getMat(), contours, -1, new Scalar(255, 255, 0));
 		return contour.getMat();

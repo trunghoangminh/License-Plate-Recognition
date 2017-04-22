@@ -2,8 +2,6 @@ package org.it.tdt.edu.vn.process;
 
 import java.awt.image.BufferedImage;
 
-import org.it.tdt.edu.vn.detection.Contour;
-import org.it.tdt.edu.vn.detection.ContourResult;
 import org.it.tdt.edu.vn.detection.RectangleDetection;
 import org.it.tdt.edu.vn.guiwindows.ImageResult;
 import org.it.tdt.edu.vn.io.OriginalImage;
@@ -71,18 +69,11 @@ public class LicensePlateDetection {
 		MorphologyMatBase morphologyMatBase = new MorphologyMatBase(
 				cannyMat.createMatResult(), Imgproc.MORPH_RECT, 3, 3, 1);
 
-//		Contour con = new Contour(morphologyMatBase.dilate());
-//		ContourResult contourAction = new ContourResult(con);
-//		mat = contourAction.createContour().getMat();
-		//RectangleDetection rect = new RectangleDetection(morphologyMatBase.createMatResult());
-		//rect.setMat(morphologyMatBase.createMatResult());
-		//rect.executeRectangleDetection();
+		RectangleDetection rect = new RectangleDetection(morphologyMatBase.dilate());
 		
-		ImageResult imageResult = new ImageResult(openMat.createMatResult(),
+		
+		ImageResult imageResult = new ImageResult(rect.executeRectangleDetection(),
 				"GrayImage");
 		imageResult.showResultImage();
-		ImageResult imageResult2 = new ImageResult(morphologyMatBase.dilate(),
-				"GrayImage2");
-		imageResult2.showResultImage();
 	}
 }
