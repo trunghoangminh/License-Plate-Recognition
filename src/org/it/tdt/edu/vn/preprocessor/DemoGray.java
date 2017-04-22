@@ -12,7 +12,7 @@ import org.opencv.imgproc.Imgproc;
  *         threshold.
  *         <p>
  */
-public class GrayMat {
+public class DemoGray {
 	/**
 	 * @param mat
 	 * @return destinationMat
@@ -108,7 +108,7 @@ public class GrayMat {
 			Mat destinationMat = new Mat(mat.rows(), mat.cols(), mat.type());
 			destinationMat = mat;
 			Imgproc.GaussianBlur(mat, destinationMat, new org.opencv.core.Size(
-					1, 1), 1);
+					75, 75), 9);
 			byte[] dataDestination = new byte[destinationMat.rows()
 					* destinationMat.cols() * (int) (destinationMat.elemSize())];
 			destinationMat.get(0, 0, dataDestination);

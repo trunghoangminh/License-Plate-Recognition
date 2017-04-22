@@ -54,10 +54,8 @@ public class OriginalMat {
 	 *         Create Mat equilibrium image.
 	 *         </p>
 	 */
-	private Mat equilibriumImage() {
+	public Mat createGrayImage(Mat originalMat) {
 		if (getImage() != null) {
-			Mat originalMat = getImage();
-			
 			Mat destinationMat = new Mat(originalMat.cols(),
 					originalMat.rows(), CvType.CV_8UC1);
 			Imgproc.cvtColor(originalMat, destinationMat,
@@ -65,29 +63,9 @@ public class OriginalMat {
 			byte[] dataDestination = new byte[destinationMat.rows()
 					* destinationMat.cols() * (int) (destinationMat.elemSize())];
 			destinationMat.get(0, 0, dataDestination);
-
 			return destinationMat;
 		}
 		System.err.println("Mat original is empty!");
-		return null;
-	}
-
-	/**
-	 * 
-	 * @return destinationMat
-	 *         <p>
-	 *         Create gray image and light equilibrium
-	 *         <p>
-	 */
-	public Mat createGrayImage() {
-		if (equilibriumImage() != null) {
-			Mat originalMat = equilibriumImage();
-			Mat destinationMat = new Mat(originalMat.cols(),
-					originalMat.rows(), CvType.CV_8UC1);
-			Imgproc.equalizeHist(originalMat, destinationMat);
-			return destinationMat;
-		}
-		System.err.println("Mat equilibrium is empty");
 		return null;
 	}
 }

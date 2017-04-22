@@ -24,7 +24,7 @@ public class ContourResult {
 		Mat mat = contour.getMat();
 		List<MatOfPoint> contours = contour.getContours();
 		Mat matHierarchy = contour.getMatHierarchy();
-		Imgproc.findContours(mat, contours, matHierarchy, Imgproc.RETR_LIST,
+		Imgproc.findContours(mat, contours, matHierarchy, Imgproc.RETR_EXTERNAL,
 				Imgproc.CHAIN_APPROX_SIMPLE);
 		return new Contour(mat, matHierarchy, contours);
 	}

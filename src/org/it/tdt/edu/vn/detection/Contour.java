@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 
 /**
  * 
@@ -53,9 +51,5 @@ public class Contour {
 		this.matHierarchy = matHierarchy;
 		this.contours = contourList;
 		this.mat = mat;
-	}
-
-	public static void main(String[] args) {
-
 	}
 }

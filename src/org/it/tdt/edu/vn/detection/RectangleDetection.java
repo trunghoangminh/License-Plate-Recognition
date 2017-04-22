@@ -2,16 +2,13 @@ package org.it.tdt.edu.vn.detection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -58,42 +55,41 @@ public class RectangleDetection {
 		for (int i = 0; i < contours.size(); i++) {
 
 			MatOfPoint contour = contours.get(i);
-			Rect rect = Imgproc.boundingRect(contour);
+			//Rect rect = Imgproc.boundingRect(contour);
 			double contourArea = Imgproc.contourArea(contour);
 			if (contourArea > maxArea) {
 				matOfPoint2f.fromList(contour.toList());
 				Imgproc.approxPolyDP(matOfPoint2f, approxCurve,
 						Imgproc.arcLength(matOfPoint2f, true) * 0.02, true);
 				long total = approxCurve.total();
-				if (total == 4) {
-					List<Double> cos = new ArrayList<>();
-					Point[] points = approxCurve.toArray();
-					for (int j = 2; j < total + 1; j++) {
-						cos.add(angle(points[(int) (j % total)], points[j - 2],
-								points[j - 1]));
-					}
-					Collections.sort(cos);
-					Double minCos = cos.get(0);
-					Double maxCos = cos.get(cos.size() - 1);
-					boolean isRect = total == 4 && minCos >= -0.1
-							&& maxCos <= 0.3;
+				if (total >= 4 && total <= 6) {
+//					List<Double> cos = new ArrayList<>();
+//					Point[] points = approxCurve.toArray();
+//					for (int j = 2; j < total + 1; j++) {
+//						cos.add(angle(points[(int) (j % total)], points[j - 2],
+//								points[j - 1]));
+//					}
+//					Collections.sort(cos);
+//					Double minCos = cos.get(0);
+//					Double maxCos = cos.get(cos.size() - 1);
+////					boolean isRect = total == 4 && minCos >= -0.1
+////							&& maxCos <= 0.3;
 
-				
-						Scalar green = new Scalar(81, 190, 0);
-						RotatedRect rotatedRect = Imgproc.minAreaRect(new MatOfPoint2f(
-								contour.toArray()));
-						drawRotatedRect(mat, rotatedRect, green, 3);
-					
+					Scalar green = new Scalar(81, 190, 0);
+					RotatedRect rotatedRect = Imgproc
+							.minAreaRect(new MatOfPoint2f(contour.toArray()));
+					drawRotatedRect(mat, rotatedRect, green, 2);
+
 				}
 			}
 		}
 
-		/*Scalar green = new Scalar(81, 190, 0);
-		for (MatOfPoint contour : contours) {
-			RotatedRect rotatedRect = Imgproc.minAreaRect(new MatOfPoint2f(
-					contour.toArray()));
-			drawRotatedRect(mat, rotatedRect, green, 3);
-		}*/
+		/*
+		 * Scalar green = new Scalar(81, 190, 0); for (MatOfPoint contour :
+		 * contours) { RotatedRect rotatedRect = Imgproc.minAreaRect(new
+		 * MatOfPoint2f( contour.toArray())); drawRotatedRect(mat, rotatedRect,
+		 * green, 3); }
+		 */
 		Imgcodecs.imwrite("a.jpg", mat);
 		return mat;
 	}
@@ -152,11 +148,11 @@ public class RectangleDetection {
 		Imgproc.drawContours(image, Arrays.asList(points), -1, color, thickness);
 	}
 
-	private void drawText(Point ofs, String text) {
-		// Mat mat = GrayImage.createGaussianBlur();
-		Imgproc.putText(mat, text, ofs, Core.FONT_HERSHEY_SIMPLEX, 0.5,
-				new Scalar(255, 255, 25));
-		Imgcodecs.imwrite("/result/demo" + ".jpg", mat);
-	}
+//	private void drawText(Point ofs, String text) {
+//		// Mat mat = GrayImage.createGaussianBlur();
+//		Imgproc.putText(mat, text, ofs, Core.FONT_HERSHEY_SIMPLEX, 0.5,
+//				new Scalar(255, 255, 25));
+//		Imgcodecs.imwrite("/result/demo" + ".jpg", mat);
+//	}
 
 }
