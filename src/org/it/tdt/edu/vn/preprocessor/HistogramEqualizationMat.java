@@ -8,9 +8,9 @@ import org.opencv.imgproc.Imgproc;
  * @author TrungHoang
  *
  */
-public class HistogramEqualization extends GrayMatBase {
+public class HistogramEqualizationMat extends GrayMatBase {
 
-	public HistogramEqualization(Mat mat) {
+	public HistogramEqualizationMat(Mat mat) {
 		super(mat);
 	}
 

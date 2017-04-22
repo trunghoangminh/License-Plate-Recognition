@@ -24,14 +24,14 @@ public class ContourResult {
 		Mat mat = contour.getMat();
 		List<MatOfPoint> contours = contour.getContours();
 		Mat matHierarchy = contour.getMatHierarchy();
-		Imgproc.findContours(mat, contours, matHierarchy, Imgproc.RETR_EXTERNAL,
+		Imgproc.findContours(mat, contours, matHierarchy, Imgproc.RETR_TREE,
 				Imgproc.CHAIN_APPROX_SIMPLE);
 		return new Contour(mat, matHierarchy, contours);
 	}
 
 	public Mat drawContour() {
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-		Imgproc.findContours(contour.getMat(), contours, new Mat(), Imgproc.RETR_LIST,
+		Imgproc.findContours(contour.getMat(), contours, new Mat(), Imgproc.RETR_TREE,
 				Imgproc.CHAIN_APPROX_SIMPLE);
 		Imgproc.drawContours(contour.getMat(), contours, -1, new Scalar(255, 255, 0));
 		return contour.getMat();

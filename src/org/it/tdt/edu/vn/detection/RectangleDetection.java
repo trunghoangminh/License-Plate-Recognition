@@ -36,8 +36,8 @@ public class RectangleDetection {
 		this.mat = mat;
 	}
 
-	public RectangleDetection() {
-
+	public RectangleDetection(Mat mat) {
+		this.mat = mat;
 	}
 
 	public Mat executeRectangleDetection() {

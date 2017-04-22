@@ -61,19 +61,4 @@ public class ImageResult {
 		window.setVisible(true);
 
 	}
-
-	public static void main(String[] args) {
-//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-//		OriginalImage originalImage = new OriginalImage(Utils.PATH_IMAGE);
-//
-//		OriginalMat originalMat = new OriginalMat(
-//				originalImage.getImageFromResourcesDirectory());
-//
-//		Mat grayMat = originalMat.equilibriumImage();
-//		Mat gauss = DemoGray.createGaussianBlur(grayMat);
-//		
-//		ImageResult gray = new ImageResult(gauss, "Gray Image");
-//
-//		gray.showResultImage();
-	}
 }

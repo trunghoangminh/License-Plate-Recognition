@@ -54,8 +54,9 @@ public class OriginalMat {
 	 *         Create Mat equilibrium image.
 	 *         </p>
 	 */
-	public Mat createGrayImage(Mat originalMat) {
+	public Mat createGrayImage() {
 		if (getImage() != null) {
+			Mat originalMat = getImage();
 			Mat destinationMat = new Mat(originalMat.cols(),
 					originalMat.rows(), CvType.CV_8UC1);
 			Imgproc.cvtColor(originalMat, destinationMat,

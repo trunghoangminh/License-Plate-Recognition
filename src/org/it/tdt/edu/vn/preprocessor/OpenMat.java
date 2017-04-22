@@ -10,9 +10,9 @@ public class OpenMat extends MorphologyMatBase {
 
 	@Override
 	public Mat createMatResult() {
-		erode();
-		dilate();
-		return super.getMat();
+		setMat(erode());
+		setMat(dilate());
+		return getMat();
 	}
 
 }

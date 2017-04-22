@@ -16,8 +16,8 @@ public class CloseMat extends MorphologyMatBase {
 
 	@Override
 	public Mat createMatResult() {
-		dilate();
-		erode();
+		setMat(dilate());
+		setMat(erode());
 		return super.getMat();
 	}
 
