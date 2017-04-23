@@ -1,4 +1,4 @@
-package org.it.tdt.edu.vn.detection;
+package org.it.tdt.edu.vn.platedetection.detection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +48,19 @@ public class RectangleDetection {
 
 			MatOfPoint2f approxCurve = new MatOfPoint2f();
 			MatOfPoint contour = contours.get(i);
+			
+			//convert MatOfPoint to MatOfPoint2f
 			MatOfPoint2f contourCurrent = new MatOfPoint2f();
 			contour.convertTo(contourCurrent, CvType.CV_32F);
 			double peri = Imgproc.arcLength(contourCurrent, true);
 
 			Imgproc.approxPolyDP(contourCurrent, approxCurve, peri * 0.06, true);
 			if (approxCurve.total() == 4) {
+				
+				//convert MatOfPoint2f to MatOfPoint
 				MatOfPoint result = new MatOfPoint();
 				approxCurve.convertTo(result, CvType.CV_32S);
+				
 				contoursResult.add(result);
 			}
 		}

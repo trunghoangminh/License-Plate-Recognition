@@ -1,6 +1,6 @@
 package org.it.tdt.edu.vn.main;
 
-import org.it.tdt.edu.vn.process.LicensePlateDetection;
+import org.it.tdt.edu.vn.platedetection.process.LicensePlateDetection;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 

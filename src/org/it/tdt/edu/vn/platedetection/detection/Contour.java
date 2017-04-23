@@ -1,4 +1,4 @@
-package org.it.tdt.edu.vn.detection;
+package org.it.tdt.edu.vn.platedetection.detection;
 
 import java.util.ArrayList;
 import java.util.List;

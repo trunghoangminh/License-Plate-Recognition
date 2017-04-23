@@ -1,4 +1,4 @@
-package org.it.tdt.edu.vn.preprocessor;
+package org.it.tdt.edu.vn.platedetection.preprocessor;
 
 import java.awt.image.BufferedImage;
 import org.it.tdt.edu.vn.io.ParseData;

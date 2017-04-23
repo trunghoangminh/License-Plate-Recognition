@@ -17,7 +17,8 @@ public class Utils {
 			"50Z1340_053.bmp",
 			"50Z2367.jpg",
 			"demo.png",
-			"demo2.jpg"};
-	public static final String PATH_IMAGE = "D:\\plate\\" + arrImg[8];
+			"demo2.jpg",
+			"52P6877.jpg"};
+	public static final String PATH_IMAGE = "D:\\plate\\" + arrImg[9];
 
 }

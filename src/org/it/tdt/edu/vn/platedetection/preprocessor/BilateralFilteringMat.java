@@ -1,4 +1,4 @@
-package org.it.tdt.edu.vn.preprocessor;
+package org.it.tdt.edu.vn.platedetection.preprocessor;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
@@ -57,5 +57,8 @@ public class BilateralFilteringMat extends GrayMatBase {
 	public void setSigmaX(double sigmaX) {
 		this.sigmaX = sigmaX;
 	}
-
+	public static void main(String[] args) {
+		double b = 0.3 * ((15-1)*0.5 - 1) + 0.8;
+		System.out.println(b);
+	}
 }

@@ -1,4 +1,4 @@
-package org.it.tdt.edu.vn.preprocessor;
+package org.it.tdt.edu.vn.platedetection.preprocessor;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
@@ -14,11 +14,11 @@ import org.opencv.imgproc.Imgproc;
 public class MorphologyMatBase extends GrayMatBase {
 
 	private int shape;
-	private int width;
-	private int height;
-	private int size;
+	private double width;
+	private double height;
+	private double size;
 
-	public MorphologyMatBase(Mat mat, int shape, int width, int height, int size) {
+	public MorphologyMatBase(Mat mat, int shape, double width, double height, double size) {
 		super(mat);
 		this.shape = shape;
 		this.width = width;
@@ -52,20 +52,28 @@ public class MorphologyMatBase extends GrayMatBase {
 		this.shape = shape;
 	}
 
-	public int getWidth() {
+	public double getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(double width) {
 		this.width = width;
 	}
 
-	public int getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(double height) {
 		this.height = height;
+	}
+
+	public double getSize() {
+		return size;
+	}
+
+	public void setSize(double size) {
+		this.size = size;
 	}
 
 	@Override
