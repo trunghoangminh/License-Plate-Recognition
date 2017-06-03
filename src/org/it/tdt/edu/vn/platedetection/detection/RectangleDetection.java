@@ -1,13 +1,18 @@
 package org.it.tdt.edu.vn.platedetection.detection;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.it.tdt.edu.vn.io.OriginalImage;
+import org.it.tdt.edu.vn.platedetection.preprocessor.OriginalMat;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 /**
@@ -41,6 +46,7 @@ public class RectangleDetection {
 		ContourResult contourAction = new ContourResult(con);
 		mat = contourAction.createContour().getMat();
 
+		Rect rect = null;
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		List<MatOfPoint> contoursResult = new ArrayList<MatOfPoint>();
 		contours = contourAction.createContour().getContours();
@@ -48,31 +54,93 @@ public class RectangleDetection {
 
 			MatOfPoint2f approxCurve = new MatOfPoint2f();
 			MatOfPoint contour = contours.get(i);
-			
-			//convert MatOfPoint to MatOfPoint2f
+
+			// convert MatOfPoint to MatOfPoint2f
 			MatOfPoint2f contourCurrent = new MatOfPoint2f();
 			contour.convertTo(contourCurrent, CvType.CV_32F);
 			double peri = Imgproc.arcLength(contourCurrent, true);
 
-			Imgproc.approxPolyDP(contourCurrent, approxCurve, peri * 0.06, true);
+			Imgproc.approxPolyDP(contourCurrent, approxCurve, peri * 0.02, true);
 			if (approxCurve.total() == 4) {
-				
-				//convert MatOfPoint2f to MatOfPoint
+
+				// convert MatOfPoint2f to MatOfPoint
 				MatOfPoint result = new MatOfPoint();
 				approxCurve.convertTo(result, CvType.CV_32S);
-				
+
 				contoursResult.add(result);
 			}
 		}
-
+		int k = 0;
 		List<MatOfPoint> finalContour = new ArrayList<MatOfPoint>();
 		for (int i = 0; i < contoursResult.size(); i++) {
 			double contourArea = Imgproc.contourArea(contoursResult.get(i));
-			if (contourArea > 200) {
+			if (contourArea > 50) {
 				finalContour.add(contoursResult.get(i));
+				rect = Imgproc.boundingRect(contoursResult.get(i));
+				k++;
 			}
 		}
-		Imgproc.drawContours(mat, finalContour, -1, new Scalar(81, 190, 0), 3);
-		return mat;
+		System.out.println(k);
+		OriginalImage originalImage = new OriginalImage(
+				"D:\\plate\\black\\img (1).jpg");
+		BufferedImage bufferedImage = originalImage
+				.getImageFromResourcesDirectory();
+		OriginalMat originalMat = new OriginalMat(bufferedImage);
+		Mat mat = originalMat.createGrayImage();
+		// Imgproc.drawContours(mat, finalContour, -1, new Scalar(81, 190, 0),
+		// 2);
+		Mat result = mat.submat(rect);
+		Mat matResult = new Mat(result.cols() * 2, result.rows() * 2,
+				result.type());
+		Imgproc.resize(result, matResult, new Size(result.cols() * 0.7,result.rows() * 0.7));
+		System.out.println(matResult.dump());
+		return matResult;
+	}
+
+	public Mat executeRectangleDetectionTest() {
+
+		// // get Mat contour
+		// Contour con = new Contour(mat);
+		// ContourResult contourAction = new ContourResult(con);
+		// mat = contourAction.createContour().getMat();
+		// Rect rect = null;
+		// List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+		// List<MatOfPoint> contoursResult = new ArrayList<MatOfPoint>();
+		// contours = contourAction.createContour().getContours();
+		// for (int i = 0; i < contours.size(); i++) {
+		//
+		// MatOfPoint2f approxCurve = new MatOfPoint2f();
+		// MatOfPoint contour = contours.get(i);
+		//
+		// //convert MatOfPoint to MatOfPoint2f
+		// MatOfPoint2f contourCurrent = new MatOfPoint2f();
+		// contour.convertTo(contourCurrent, CvType.CV_32F);
+		// double peri = Imgproc.arcLength(contourCurrent, true);
+		//
+		//
+		// Imgproc.approxPolyDP(contourCurrent, approxCurve, peri * 0.02, true);
+		// if (approxCurve.total() == 4) {
+		//
+		// //convert MatOfPoint2f to MatOfPoint
+		// MatOfPoint result = new MatOfPoint();
+		// approxCurve.convertTo(result, CvType.CV_32S);
+		// rect = Imgproc.boundingRect(result);
+		// contoursResult.add(result);
+		// }
+		// }
+		//
+		// List<MatOfPoint> finalContour = new ArrayList<MatOfPoint>();
+		// for (int i = 0; i < contoursResult.size(); i++) {
+		// double contourArea = Imgproc.contourArea(contoursResult.get(i));
+		// if (contourArea > 50) {
+		// finalContour.add(contoursResult.get(i));
+		// }
+		// }
+		//
+		// //Imgproc.drawContours(mat, finalContour, -1, new Scalar(81, 190, 0),
+		// 1);
+		// mat.submat(rect);
+		// return mat;
+		return new Mat();
 	}
 }

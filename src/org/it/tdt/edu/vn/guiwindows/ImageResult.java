@@ -1,7 +1,12 @@
 package org.it.tdt.edu.vn.guiwindows;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
 import org.it.tdt.edu.vn.io.ParseData;
 import org.opencv.core.Mat;
 
@@ -50,14 +55,21 @@ public class ImageResult {
 	}
 
 	public void showResultImage() {
-
 		JFrame window = new JFrame(windowName);
 		ParseData parseData = new ParseData(matResult);
 		BufferedImage destinationImage = parseData.convertMatToBufferedImage();
+		File output = new File("D:\\Text\\abc.png");
+		try {
+			ImageIO.write(destinationImage, "png", output);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ImagePanel imagePanel = new ImagePanel(destinationImage);
 		window.setSize(destinationImage.getWidth(),
-				destinationImage.getHeight());
+				destinationImage.getHeight() + 40);
 		window.add(imagePanel);
+		window.setResizable(false);
 		window.setVisible(true);
 
 	}
