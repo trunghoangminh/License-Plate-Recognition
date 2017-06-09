@@ -1,6 +1,7 @@
 package org.it.tdt.edu.vn.platedetection.process;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import org.it.tdt.edu.vn.guiwindows.ImageResult;
 import org.it.tdt.edu.vn.io.OriginalImage;
@@ -203,9 +204,32 @@ public class LicensePlateDetection {
 		Mat close = closeMat.dilate();
 
 		RectangleDetection rectangleDetection = new RectangleDetection(close);
-		Mat rectangle = rectangleDetection.executeRectangleDetection();
+		//rectangleDetection.executeRectangleDetection();
+		Mat rectangle = rectangleDetection.getMat();
 
 		return rectangle;
+	}
+	public List<Mat> processImagePointBlackBiggerThanPointWhiteTest() {
+
+		OriginalImage originalImage = new OriginalImage(imgUrl);
+		BufferedImage bufferedImage = originalImage
+				.getImageFromResourcesDirectory();
+		OriginalMat originalMat = new OriginalMat(bufferedImage);
+
+		// Step 1
+		Mat mat = originalMat.createGrayImage();
+
+		ThresholdMat thresholdMat = new ThresholdMat(mat, 0, 255,
+				Imgproc.THRESH_OTSU);
+		Mat threshold = thresholdMat.createMatResult();
+
+		MorphologyMatBase closeMat = new MorphologyMatBase(threshold,
+				Imgproc.MORPH_RECT, 1, 1, 1);
+		Mat close = closeMat.dilate();
+
+		RectangleDetection rectangleDetection = new RectangleDetection(close);
+
+		return rectangleDetection.executeRectangleDetection();
 	}
 
 	public Mat test() {

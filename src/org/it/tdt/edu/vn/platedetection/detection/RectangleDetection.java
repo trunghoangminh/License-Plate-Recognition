@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.it.tdt.edu.vn.io.OriginalImage;
 import org.it.tdt.edu.vn.platedetection.preprocessor.OriginalMat;
+import org.it.tdt.edu.vn.platedetection.preprocessor.ThresholdMat;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -39,7 +39,7 @@ public class RectangleDetection {
 		this.mat = mat;
 	}
 
-	public Mat executeRectangleDetection() {
+	public List<Mat> executeRectangleDetection() {
 
 		// get Mat contour
 		Contour con = new Contour(mat);
@@ -80,21 +80,33 @@ public class RectangleDetection {
 				k++;
 			}
 		}
-		System.out.println(k);
+		//System.out.println(k);
 		OriginalImage originalImage = new OriginalImage(
 				"D:\\plate\\black\\img (1).jpg");
 		BufferedImage bufferedImage = originalImage
 				.getImageFromResourcesDirectory();
 		OriginalMat originalMat = new OriginalMat(bufferedImage);
 		Mat mat = originalMat.createGrayImage();
-		// Imgproc.drawContours(mat, finalContour, -1, new Scalar(81, 190, 0),
-		// 2);
-		Mat result = mat.submat(rect);
+
+		
+		// drop license plate
+		
+		SubMat subMat = new SubMat(mat, rect);
+		Mat result = subMat.dropImage();
+		
 		Mat matResult = new Mat(result.cols() * 2, result.rows() * 2,
 				result.type());
-		Imgproc.resize(result, matResult, new Size(result.cols() * 0.7,result.rows() * 0.7));
-		System.out.println(matResult.dump());
-		return matResult;
+		Imgproc.resize(result, matResult,
+				new Size(result.cols() * 2.5, result.rows() * 2.5));
+
+		ThresholdMat thresholdMat = new ThresholdMat(matResult, 0, 255,
+				Imgproc.THRESH_OTSU);
+		CharacterSegment characterSegment = new CharacterSegment(
+				thresholdMat.createMatResult());
+
+		List<Mat> listImageNumber = characterSegment.findBoundingBoxes()
+				.getListImageNumber();
+		return listImageNumber;
 	}
 
 	public Mat executeRectangleDetectionTest() {

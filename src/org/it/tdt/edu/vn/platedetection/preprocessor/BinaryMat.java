@@ -16,9 +16,14 @@ public class BinaryMat extends GrayMatBase {
 	private int blockSize;
 	private int c;
 
-	public BinaryMat(Mat mat) {
+	public BinaryMat(Mat mat, double maxValue, int adaptiveMethod,
+			int thresholdType, int blockSize, int c) {
 		super(mat);
-
+		this.maxValue = maxValue;
+		this.adaptiveMethod = adaptiveMethod;
+		this.thresholdType = thresholdType;
+		this.blockSize = blockSize;
+		this.c = c;
 	}
 
 	@Override
