@@ -1,5 +1,6 @@
 package org.it.tdt.edu.vn.io;
 
+import org.apache.commons.io.FileUtils;
 import org.it.tdt.edu.vn.platedetection.preprocessor.BilateralFilteringMat;
 import org.it.tdt.edu.vn.platedetection.preprocessor.BinaryMat;
 import org.it.tdt.edu.vn.platedetection.preprocessor.CannyMat;
@@ -101,5 +102,8 @@ public class AppContext {
 
 	public void setThresholdMat(ThresholdMat thresholdMat) {
 		this.thresholdMat = thresholdMat;
+	}
+	public static void main(String[] args) {
+		//FileUtils.
 	}
 }

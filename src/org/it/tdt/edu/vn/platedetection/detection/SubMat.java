@@ -1,7 +1,12 @@
 package org.it.tdt.edu.vn.platedetection.detection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 
 /**
  * 
@@ -10,7 +15,7 @@ import org.opencv.core.Rect;
  */
 public class SubMat {
 	private Mat original;
-	private Rect rect;
+	private List<MatOfPoint> contours;
 
 	public Mat getOriginal() {
 		return original;
@@ -20,20 +25,30 @@ public class SubMat {
 		this.original = original;
 	}
 
-	public Rect getRect() {
-		return rect;
+	public List<MatOfPoint> getContours() {
+		return contours;
 	}
 
-	public void setRect(Rect rect) {
-		this.rect = rect;
+	public void setContours(List<MatOfPoint> contours) {
+		this.contours = contours;
 	}
 
-	public SubMat(Mat original, Rect rect) {
+	public SubMat(Mat original, List<MatOfPoint> contours) {
 		this.original = original;
-		this.rect = rect;
+		this.contours = contours;
 	}
-
-	public Mat dropImage() {
-		return original.submat(rect);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Mat> dropImage() {
+		List<Mat> result = new ArrayList<Mat>();
+		for (MatOfPoint contour : contours) {
+			Rect rect = Imgproc.boundingRect(contour);
+			Mat temp = original.submat(rect);
+			result.add(temp);
+		}
+		return result;
 	}
 }

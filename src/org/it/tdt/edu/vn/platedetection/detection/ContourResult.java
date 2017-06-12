@@ -32,22 +32,10 @@ public class ContourResult {
 	public Contour createContourEx() {
 		Mat mat = contour.getMat();
 		List<MatOfPoint> contours = contour.getContours();
-		List<MatOfPoint> newContours = new ArrayList<MatOfPoint>();
 		Mat matHierarchy = new Mat();
 		Imgproc.findContours(mat, contours, matHierarchy, Imgproc.RETR_LIST,
 				Imgproc.CHAIN_APPROX_SIMPLE);
-		System.out.println("List contour: "+contours.size());
-//		int count = 0;
-//		for (int i = 0; i < contours.size(); i++) {
-//
-//			double arrHierarchy[] = matHierarchy.get(i, 3);
-//			if (arrHierarchy != null) {
-//				if(arrHierarchy[0] == -1){
-//					newContours.add(contours.get(i));
-//				}
-//			}
-//		}
-//		System.out.println( "Contour :"+count);
+
 		return new Contour(mat, matHierarchy, contours);
 	}
 
