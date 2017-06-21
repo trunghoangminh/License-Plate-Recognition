@@ -1,9 +1,9 @@
 package org.it.tdt.edu.vn.platedetection.process;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.it.tdt.edu.vn.guiwindows.ImageResult;
 import org.it.tdt.edu.vn.io.OriginalImage;
@@ -190,35 +190,12 @@ public class LicensePlateDetection {
 
 	}
 
-	public Mat processImagePointBlackBiggerThanPointWhite() {
-
-		OriginalImage originalImage = new OriginalImage(imgUrl);
-		BufferedImage bufferedImage = originalImage
-				.getImageFromResourcesDirectory();
-		OriginalMat originalMat = new OriginalMat(bufferedImage);
-
-		// Step 1
-		Mat mat = originalMat.createGrayImage();
-
-		ThresholdMat thresholdMat = new ThresholdMat(mat, 0, 255,
-				Imgproc.THRESH_OTSU);
-		Mat threshold = thresholdMat.createMatResult();
-
-		MorphologyMatBase closeMat = new MorphologyMatBase(threshold,
-				Imgproc.MORPH_RECT, 1, 1, 1);
-		Mat close = closeMat.dilate();
-
-		RectangleDetection rectangleDetection = new RectangleDetection(close);
-		//rectangleDetection.executeRectangleDetection();
-		Mat rectangle = rectangleDetection.getMat();
-
-		return rectangle;
-	}
 	/**
 	 * I'am working here.
+	 * 
 	 * @return
 	 */
-	public List<Mat> processImagePointBlackBiggerThanPointWhiteTest() {
+	public List<Mat> processImagePointBlackBiggerThanPointWhite() {
 
 		OriginalImage originalImage = new OriginalImage(imgUrl);
 		BufferedImage bufferedImage = originalImage
@@ -227,7 +204,7 @@ public class LicensePlateDetection {
 
 		// Step 1
 		Mat mat = originalMat.createGrayImage();
-		
+
 		ThresholdMat thresholdMat = new ThresholdMat(mat.clone(), 0, 255,
 				Imgproc.THRESH_OTSU);
 		Mat threshold = thresholdMat.createMatResult();
@@ -238,53 +215,105 @@ public class LicensePlateDetection {
 
 		RectangleDetection rectangleDetection = new RectangleDetection(close);
 
-		List<MatOfPoint> contoursDetectPlate = rectangleDetection.executeRectangleDetection();
-		
+		List<MatOfPoint> contoursDetectPlate = rectangleDetection
+				.executeRectangleDetection();
+
 		SubMat subMatDetectPlate = new SubMat(mat, contoursDetectPlate);
-		
-		//Get plate detected
+
+		// Get plate detected
 		List<Mat> detectPlates = subMatDetectPlate.dropImage();
 		Mat matDetectPlate = detectPlates.get(5);
-		
-		ImageResult imageResult = new ImageResult(matDetectPlate,
-				"Result " );
-		imageResult.showResultImage();
-		
-		// pre-process
-		Mat matResult = new Mat(matDetectPlate.cols() * 2, matDetectPlate.rows() * 2,
-				matDetectPlate.type());
-		Imgproc.resize(matDetectPlate, matResult,
-				new Size(matDetectPlate.cols() * 2.5, matDetectPlate.rows() * 2.5));
 
-		ThresholdMat thresholdMatDetectPlate = new ThresholdMat(matResult, 0, 255,
-				Imgproc.THRESH_OTSU);
-		
-		Mat thresholdMatDetectPlateMat = thresholdMatDetectPlate.createMatResult();
-		
+		ImageResult imageResult = new ImageResult(matDetectPlate, "Result ");
+		imageResult.showResultImage();
+
+		// pre-process
+		Mat matResult = new Mat(matDetectPlate.cols() * 2,
+				matDetectPlate.rows() * 2, matDetectPlate.type());
+		Imgproc.resize(matDetectPlate, matResult,
+				new Size(matDetectPlate.cols() * 1, matDetectPlate.rows() * 1));
+
+		ThresholdMat thresholdMatDetectPlate = new ThresholdMat(matResult, 0,
+				255, Imgproc.THRESH_OTSU);
+
+		Mat thresholdMatDetectPlateMat = thresholdMatDetectPlate
+				.createMatResult();
+
 		ImageResult imageResults = new ImageResult(thresholdMatDetectPlateMat,
-				"Result " );
+				"Result ");
 		imageResults.showResultImage();
-		
-		CharacterSegment characterSegment = new CharacterSegment(thresholdMatDetectPlateMat.clone());
-		
-		List<MatOfPoint> contoursNumber = characterSegment.executeCharacterSegment();
-		
+
+		CharacterSegment characterSegment = new CharacterSegment(
+				thresholdMatDetectPlateMat.clone());
+
+		List<MatOfPoint> contoursNumber = characterSegment
+				.executeCharacterSegment();
+
 		System.out.println(contoursNumber.size());
-		SubMat subMatNumberImg = new SubMat(thresholdMatDetectPlateMat.clone(), contoursNumber);
-		
+		SubMat subMatNumberImg = new SubMat(thresholdMatDetectPlateMat.clone(),
+				contoursNumber);
+
 		List<Mat> listNumberImg = subMatNumberImg.dropImage();
-		
+
 		return listNumberImg;
 	}
 
-	public Mat test() {
+	public Map<String, List<Mat>> processImagePointBlackBiggerThanPointWhiteTest() {
+
 		OriginalImage originalImage = new OriginalImage(imgUrl);
 		BufferedImage bufferedImage = originalImage
 				.getImageFromResourcesDirectory();
 		OriginalMat originalMat = new OriginalMat(bufferedImage);
 
 		// Step 1
-		return originalMat.createGrayImage();
+		Mat mat = originalMat.createGrayImage();
+
+		ThresholdMat thresholdMat = new ThresholdMat(mat.clone(), 0, 255,
+				Imgproc.THRESH_OTSU);
+		Mat threshold = thresholdMat.createMatResult();
+
+		MorphologyMatBase closeMat = new MorphologyMatBase(threshold,
+				Imgproc.MORPH_RECT, 1, 1, 1);
+		Mat close = closeMat.dilate();
+
+		RectangleDetection rectangleDetection = new RectangleDetection(close);
+
+		List<MatOfPoint> contoursDetectPlate = rectangleDetection
+				.executeRectangleDetection();
+
+		SubMat subMatDetectPlate = new SubMat(mat, contoursDetectPlate);
+
+		// Get plate detected
+		List<Mat> detectPlates = subMatDetectPlate.dropImage();
+		Map<String, List<Mat>> mapNumberImg = new HashMap<String, List<Mat>>();
+		
+		for (int i = 0; i < detectPlates.size(); i++) {
+			// pre-process
+			Mat matDetectPlate = detectPlates.get(i);
+			Mat matResult = new Mat(matDetectPlate.cols() * 2,
+					matDetectPlate.rows() * 2, matDetectPlate.type());
+			Imgproc.resize(matDetectPlate, matResult,
+					new Size(matDetectPlate.cols() * 1,
+							matDetectPlate.rows() * 1));
+
+			ThresholdMat thresholdMatDetectPlate = new ThresholdMat(matResult,
+					0, 255, Imgproc.THRESH_OTSU);
+
+			Mat thresholdMatDetectPlateMat = thresholdMatDetectPlate
+					.createMatResult();
+
+			CharacterSegment characterSegment = new CharacterSegment(
+					thresholdMatDetectPlateMat.clone());
+
+			List<MatOfPoint> contoursNumber = characterSegment
+					.executeCharacterSegment();
+
+			SubMat subMatNumberImg = new SubMat(
+					thresholdMatDetectPlateMat.clone(), contoursNumber);
+
+			mapNumberImg.put(String.valueOf(i), subMatNumberImg.dropImage());
+		}
+		return mapNumberImg;
 	}
 
 	public Mat processImagePointWhiteBiggerThanPointBlack() {
@@ -360,7 +389,7 @@ public class LicensePlateDetection {
 		//
 		// //Step 9
 		RectangleDetection rect = new RectangleDetection(morphology);
-		Mat rectangle = new Mat();//= rect.executeRectangleDetectionTest();
+		Mat rectangle = new Mat();// = rect.executeRectangleDetectionTest();
 
 		return rectangle;
 	}

@@ -4,10 +4,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.it.tdt.edu.vn.platedetection.process.LicensePlateDetection;
-import org.it.tdt.edu.vn.utils.Utils;
-import org.opencv.core.Core;
-
 public class WriteFile {
 	private String fileName;
 	private String content;
@@ -52,14 +48,5 @@ public class WriteFile {
 				ex.printStackTrace();
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		LicensePlateDetection ls = new LicensePlateDetection(
-				Utils.PATH_IMAGE_BLACK + "img (1).jpg");
-		WriteFile writeFile = new WriteFile("demo.txt", ls.test().dump());
-		writeFile.writeFileText();
-		System.out.println("Done!");
 	}
 }
