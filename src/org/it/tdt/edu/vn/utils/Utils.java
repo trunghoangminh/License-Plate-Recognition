@@ -11,7 +11,7 @@ public class Utils {
 	// public static final String PATH_IMAGE_WHITE = "D:\\plate\\white\\";
 	public static final String PATH_IMAGE_INPUT = "D:\\Data Test\\Image\\G2\\";
 	public static final String PATH_IMAGE_RESULT = "D:\\Data Test\\Image\\G7\\";
-	public static final String PATH_IMAGE_ZERO = "D:\\Data Test\\Image\\G6\\0\\";
+	public static final String PATH_IMAGE_ZERO = "D:\\Data Test\\Image\\G6\\00\\";
 	public static final String PATH_IMAGE_TEST = "D:\\Data Test\\Test\\";
 
 	public static final String listImg[] = { "img (1).jpg", "img (2).jpg",

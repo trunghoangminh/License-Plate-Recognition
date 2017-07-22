@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.it.tdt.edu.vn.ocrtraining.SvmTraining;
+import org.opencv.ml.SVM;
+
 public class WriteFile {
 	private String fileName;
 	private String content;
@@ -33,7 +36,7 @@ public class WriteFile {
 		BufferedWriter bufferedWriter = null;
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter(ReadFile.URL_DIRECTORY + fileName);
+			fileWriter = new FileWriter(fileName);
 			bufferedWriter = new BufferedWriter(fileWriter);
 			bufferedWriter.write(content);
 		} catch (IOException e) {
@@ -48,5 +51,9 @@ public class WriteFile {
 				ex.printStackTrace();
 			}
 		}
+	}
+	public static void main(String[] args) {
+		WriteFile writeFile = new WriteFile(SvmTraining.XML_PATH, "abc");
+		writeFile.writeFileText();
 	}
 }
